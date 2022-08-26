@@ -1,0 +1,195 @@
+{
+	"id": "d7b269e7-e88e-40c1-8271-cb023409142b",
+	"name": "prodEnv",
+	"values": [
+		{
+			"key": "url",
+			"value": "https://yolocast.yololiv.com",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "timestamp",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "current_timestamp",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "starTime",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "endTime",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "sourceId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "activityId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "constantsourceId",
+			"value": "892669276501053440",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "constantactivityId",
+			"value": "892673264189444096",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "constantmediaId",
+			"value": "885818491933376512",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "delsourceId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "firstactivityId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "secondactivityId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "thirdactivityId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "rtmp-platformId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "rtmpdel-platformId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "youtu-platformId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "fb-platformId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "twitch-platformId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "pciturelUrl",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "materialId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "groupId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "sourceUrl",
+			"value": "https://yolocast.yololiv.com/api/source",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "platformUrl",
+			"value": "https://yolocast.yololiv.com/api/platform/rtmp",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "coverUrl",
+			"value": "https://yolocast-1258001477.cos.na-siliconvalley.myqcloud.com/image/885756892349276160/1088ce2f-1946-4331-82af-5cc3eeb09580.gif",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "docId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "activityDocId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "channelId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "startTimeOffset",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "endTimeOffset",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2022-04-14T12:26:46.220Z",
+	"_postman_exported_using": "Postman/9.15.6"
+}

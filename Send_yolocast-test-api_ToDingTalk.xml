@@ -1,0 +1,78 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <io.jenkins.plugins.DingTalkJobProperty plugin="dingding-notifications@2.4.5">
+      <notifierConfigs>
+        <io.jenkins.plugins.DingTalkNotifierConfig>
+          <checked>false</checked>
+          <robotId>753735a8-4295-4d08-ad9c-895bf7e8a3b6</robotId>
+          <robotName>yolocast2.0robot</robotName>
+          <atAll>false</atAll>
+          <atMobile></atMobile>
+          <content></content>
+          <noticeOccasions>
+            <string>SUCCESS</string>
+            <string>START</string>
+            <string>ABORTED</string>
+            <string>FAILURE</string>
+            <string>UNSTABLE</string>
+          </noticeOccasions>
+        </io.jenkins.plugins.DingTalkNotifierConfig>
+      </notifierConfigs>
+    </io.jenkins.plugins.DingTalkJobProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <jenkins.triggers.ReverseBuildTrigger>
+      <spec></spec>
+      <upstreamProjects>yolocast-test-api,</upstreamProjects>
+      <threshold>
+        <name>FAILURE</name>
+        <ordinal>2</ordinal>
+        <color>RED</color>
+        <completeBuild>true</completeBuild>
+      </threshold>
+    </jenkins.triggers.ReverseBuildTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!/bin/sh
+source /Users/zhangshichao/.zshrc
+cd /Users/zhangshichao/Documents/Yololiv/interface_test/jar
+java -jar SendDK.jar</command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.plugins.ws__cleanup.WsCleanup plugin="ws-cleanup@0.39">
+      <patterns class="empty-list"/>
+      <deleteDirs>false</deleteDirs>
+      <skipWhenFailed>false</skipWhenFailed>
+      <cleanWhenSuccess>true</cleanWhenSuccess>
+      <cleanWhenUnstable>true</cleanWhenUnstable>
+      <cleanWhenFailure>true</cleanWhenFailure>
+      <cleanWhenNotBuilt>true</cleanWhenNotBuilt>
+      <cleanWhenAborted>true</cleanWhenAborted>
+      <notFailBuild>false</notFailBuild>
+      <cleanupMatrixParent>false</cleanupMatrixParent>
+      <externalDelete></externalDelete>
+      <disableDeferredWipeout>false</disableDeferredWipeout>
+    </hudson.plugins.ws__cleanup.WsCleanup>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.39">
+      <deleteDirs>false</deleteDirs>
+      <cleanupParameter></cleanupParameter>
+      <externalDelete></externalDelete>
+      <disableDeferredWipeout>false</disableDeferredWipeout>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+  </buildWrappers>
+</project>

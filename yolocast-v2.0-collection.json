@@ -1,0 +1,2627 @@
+{
+	"info": {
+		"_postman_id": "c31e028c-9f5b-45e0-992c-bc34aacff5c1",
+		"name": "yolocast",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "yolocast-v2.0",
+			"item": [
+				{
+					"name": "用户登陆",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"login Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									" ",
+									"// 把responseBody转为json字符串",
+									"var data = JSON.parse(responseBody);",
+									"// 设置环境变量token，供后面的接口引用，位置就是上一步获取的位置",
+									"pm.environment.set(\"token\", data.data.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"zhangsc@yunxi.tv\",\n    \"password\":\"zsc123456\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/passport/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"passport",
+								"login"
+							]
+						},
+						"description": "用户登录"
+					},
+					"response": []
+				},
+				{
+					"name": "获取结束活动列表",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get a list of events that ended\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									" ",
+									"// 把responseBody转为json字符串",
+									"var data = JSON.parse(responseBody);",
+									"// 设置环境变量token，供后面的接口引用，位置就是上一步获取的位置",
+									"console.log(data);",
+									"pm.environment.set(\"activityId\", data.data.items[0].activityId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity?pageNo=1&pageSize=10&title=&status=3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity"
+							],
+							"query": [
+								{
+									"key": "pageNo",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "title",
+									"value": ""
+								},
+								{
+									"key": "status",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取直播活动列表",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get a list of live events\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity?pageNo=1&pageSize=10&title=&status=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity"
+							],
+							"query": [
+								{
+									"key": "pageNo",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "title",
+									"value": ""
+								},
+								{
+									"key": "status",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取预约活动列表",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get a list of scheduled events\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"// 把responseBody转为json字符串",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity?pageNo=1&pageSize=10&title=&status=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity"
+							],
+							"query": [
+								{
+									"key": "pageNo",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "title",
+									"value": ""
+								},
+								{
+									"key": "status",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Source列表-保证source大于3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ensure that source is greater than 3\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									" ",
+									"// 把responseBody转为json字符串",
+									"var data = JSON.parse(responseBody);",
+									"// 设置环境变量，供后面的接口引用",
+									"//pm.environment.set(\"sourceId\", data.data[0].sourceId);",
+									"//pm.environment.set(\"delsourceId\", data.data[1].sourceId);",
+									"",
+									"if(data.data.length<3){",
+									"    for(var i=data.data.length;i<3;i++){",
+									"        //新增1个source",
+									"        const regRequest = {",
+									"            url: pm.environment.get(\"sourceUrl\"),",
+									"            method: 'POST',",
+									"            header: {",
+									"                \"Content-Type\": \"application/json\",",
+									"                \"cast-auth\": pm.environment.get(\"token\")",
+									"            },",
+									"            body: {",
+									"                mode: 'raw',  // 使用raw(原始)格式",
+									"                raw: JSON.stringify({ name: '新增第'+ i +'个source' + pm.environment.get(\"current_timestamp\"), description: '数量不够 自动新增一个source' }) //要将JSON对象转为文本发送",
+									"            }",
+									"        };",
+									"        //发送请求",
+									"        pm.sendRequest(regRequest, function (err, res) {",
+									"            console.log(err ? err : res.json());  // 响应为JSON格式可以使用res.json()获取到JSON对象",
+									"        });",
+									"        console.log(\"新增第\"+ i +\"个source\" + pm.environment.get(\"current_timestamp\"))",
+									"    }",
+									"",
+									"}",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"    var moment = require('moment');",
+									"    var current_timestamp = moment().format(\"YYYY-MM-DD H:mm:ss\")",
+									"    pm.environment.set(\"current_timestamp\", current_timestamp);",
+									"    //Get Normal TimeStamp",
+									"    console.log(current_timestamp);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/source",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"source"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取Source列表-sourceId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"get two sourceId\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									" ",
+									"",
+									"// 把responseBody转为json字符串",
+									"var data = JSON.parse(responseBody);",
+									"//断言count数量不为0",
+									"tests[\"Check respose source-count\"] = data.count >= \"3\"; ",
+									"console.log(data.data.count)",
+									"",
+									"// 设置环境变量，供后面的接口引用",
+									"pm.environment.set(\"sourceId\", data.data[0].sourceId);",
+									"pm.environment.set(\"delsourceId\", data.data[1].sourceId);",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/source",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"source"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改Source的Stream key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Update the stream key of the source ID\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/source/reset/key?sourceId={{sourceId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"source",
+								"reset",
+								"key"
+							],
+							"query": [
+								{
+									"key": "sourceId",
+									"value": "{{sourceId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改Source",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"check sourceid status code\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Update the name and description of the source\"] = jsonData.data === true; //断言data为true",
+									"console.log(jsonData.data)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"    var moment = require('moment');",
+									"    var current_timestamp = moment().format(\"YYYY-MM-DD H:mm:ss\")",
+									"    pm.environment.set(\"current_timestamp\", current_timestamp);",
+									"    //Get Normal TimeStamp",
+									"    console.log(current_timestamp);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"obs-update{{current_timestamp}}\",\n    \"description\" : \"这是{{current_timestamp}} update的Source\",\n    \"sourceId\" : \"{{sourceId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/source",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"source"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除Source",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"delete source Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/source?sourceId={{delsourceId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"source"
+							],
+							"query": [
+								{
+									"key": "sourceId",
+									"value": "{{delsourceId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "platforms列表-保证platform大于3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ensure that platform is greater than 3\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									" ",
+									"// 把responseBody转为json字符串",
+									"var data = JSON.parse(responseBody);",
+									"// 设置环境变量，供后面的接口引用",
+									"//pm.environment.set(\"sourceId\", data.data[0].sourceId);",
+									"//pm.environment.set(\"delsourceId\", data.data[1].sourceId);",
+									"",
+									"    for(var i=data.data.rtmpAuthList.length;i<3;i++){",
+									"        //判断source个数，请求添加source接口，保证列表有3个source",
+									"        const regRequest = {",
+									"            url: pm.environment.get(\"platformUrl\"),",
+									"            method: 'POST',",
+									"            header: {",
+									"                \"Content-Type\": \"application/json\",",
+									"                \"cast-auth\": pm.environment.get(\"token\")",
+									"            },",
+									"            body: {",
+									"                mode: 'raw',  // 使用raw(原始)格式",
+									"                raw: JSON.stringify({ ",
+									"                    name: '新增第'+ i +'个rtmp', ",
+									"                    serverUrl: \"rtmp://stream-push.yunxi.tv/live/\",",
+									"                    streamKey: \"stream_d33cde7893fd45d6892fd4bccb4148c6?txSecret=0560800319f1d27ba0bfeae9bb3926c1&txTime=623d5e19\",",
+									"                    isAuth: 0,",
+									"                    authUsername: \"\",",
+									"                    authPassword: \"\"",
+									"                    }) //要将JSON对象转为文本发送  ",
+									"            }",
+									"        };",
+									"        //发送请求",
+									"        pm.sendRequest(regRequest, function (err, res) {",
+									"            console.log(err ? err : res.json());  // 响应为JSON格式可以使用res.json()获取到JSON对象",
+									"        });",
+									"        console.log(pm.environment.get(\"current_timestamp\")+\"新增第\"+ i +\"rtmp\")",
+									"    }",
+									"",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/platform/bind-list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"platform",
+								"bind-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取platforms列表-platformId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"bind-list Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									" ",
+									"// 把responseBody转为json字符串",
+									"var data = JSON.parse(responseBody);",
+									"//断言count数量不为0",
+									"tests[\"Check respose rtmpAuthList length\"] = data.data.rtmpAuthList.length >= \"3\"; ",
+									"tests[\"Check respose youtubeAuthList length\"] = data.data.youtubeAuthList.length >= \"1\";",
+									"tests[\"Check respose facebookAuthList length\"] = data.data.facebookAuthList.length >= \"1\";",
+									"tests[\"Check respose twitchAuthList length\"] = data.data.twitchAuthList.length >= \"1\";",
+									"console.log(data.data.rtmpAuthList.length)",
+									"",
+									"pm.environment.set(\"rtmp-platformId\", data.data.rtmpAuthList[0].platformId);",
+									"pm.environment.set(\"rtmpdel-platformId\", data.data.rtmpAuthList[1].platformId);",
+									"pm.environment.set(\"youtu-platformId\",data.data.youtubeAuthList[0].platformId);",
+									"pm.environment.set(\"fb-platformId\", data.data.facebookAuthList[0].platformId);",
+									"pm.environment.set(\"twitch-platformId\", data.data.twitchAuthList[0].platformId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/platform/bind-list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"platform",
+								"bind-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除rtmp",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/platform?platformId={{rtmpdel-platformId}}&type=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"platform"
+							],
+							"query": [
+								{
+									"key": "platformId",
+									"value": "{{rtmpdel-platformId}}"
+								},
+								{
+									"key": "type",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建活动 (obs)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){",
+									"    var moment = require('moment');",
+									"    var current_timestamp = moment().format(\"YYYY-MM-DD H:mm:ss\")",
+									"    pm.environment.set(\"current_timestamp\", current_timestamp);",
+									"    //Get Normal TimeStamp",
+									"    console.log(current_timestamp);",
+									"",
+									"",
+									"    timestamp=Math.round(new Date().getTime())",
+									"    console.log(timestamp)",
+									"    pm.environment.set(\"starTime\", timestamp+1800000);",
+									"    pm.environment.set(\"endTime\", timestamp+3600000);",
+									"},2000)",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"create events Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Check respose create obs-activity\"] = jsonData.data === true; //断言data为true",
+									"console.log(jsonData.data)",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"broadcastType\": 1,\n\"coverUrl\": \"https://yolocast-1258001477.cos.na-siliconvalley.myqcloud.com/image/885756892349276160/01e60968-71be-4c4f-aeff-ca9c718c1120.jpg\",\n\"description\": \"\",\n\"endTime\": {{endTime}},\n\"isAutoSubtitle\": 0,\n\"isEmbeddedConfig\": 0,\n\"isLiveOnly\": 0,\n\"isSetPassword\": 0,\n\"sourceReferenceId\": \"{{sourceId}}\",\n\"sourceReferenceType\": 1,\n\"startTime\": {{starTime}},\n\"title\": \"obs-接口自动化{{current_timestamp}}\",\n\"videoFrameRate\": 1,\n\"videoResolution\": 1,\n\"destinationData\":[\n\n    {\n    \"platformId\": \"{{youtu-platformId}}\",\n    \"platformType\": 2,\n    \"privacyStatus\": 3\n    },\n    {\n        \"platformId\": \"{{fb-platformId}}\",\n        \"platformType\": 3,\n        \"facebookType\": 1,\n        \"privacyStatus\": 3\n    }\n\n]\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/activity",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建活动 (re-event)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){",
+									"    var moment = require('moment');",
+									"    var current_timestamp = moment().format(\"YYYY-MM-DD H:mm:ss\")",
+									"    pm.environment.set(\"current_timestamp\", current_timestamp);",
+									"    //Get Normal TimeStamp",
+									"    console.log(current_timestamp);",
+									"",
+									"",
+									"    timestamp=Math.round(new Date().getTime())",
+									"    console.log(timestamp)",
+									"    pm.environment.set(\"starTime\", timestamp+1800000);",
+									"    pm.environment.set(\"endTime\", timestamp+3600000);",
+									"},2000)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"create re-event activity Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Check respose create reevent-activity\"] = jsonData.data === true; //断言data为true",
+									"console.log(jsonData.data)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"broadcastType\": 1,\n\"coverUrl\": \"https://yolocast-test-1258001477.cos.na-siliconvalley.myqcloud.com/image/882085993523781632/59852fae-6a86-4b66-941f-b69fc4f30cbc.jpg\",\n\"description\": \"\",\n\"endTime\": {{endTime}},\n\"isAutoSubtitle\": 0,\n\"isEmbeddedConfig\": 0,\n\"isLiveOnly\": 0,\n\"isSetPassword\": 0,\n\"sourceReferenceId\": \"{{constantactivityId}}\",\n\"sourceReferenceType\": 2,\n\"startTime\": {{starTime}},\n\"title\": \"引用活动-接口自动化{{current_timestamp}}\",\n\"videoFrameRate\": 1,\n\"videoResolution\": 1,\n\"destinationData\":[\n    {\n        \"platformId\": \"{{rtmp-platformId}}\",\n        \"platformType\": 1\n    },\n    {\n    \"platformId\": \"{{youtu-platformId}}\",\n    \"platformType\": 2,\n    \"privacyStatus\": 3\n    }\n]\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/activity",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "创建活动 (mediavideo）",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){",
+									"    var moment = require('moment');",
+									"    var current_timestamp = moment().format(\"YYYY-MM-DD H:mm:ss\")",
+									"    pm.environment.set(\"current_timestamp\", current_timestamp);",
+									"    //Get Normal TimeStamp",
+									"    console.log(current_timestamp);",
+									"",
+									"",
+									"    timestamp=Math.round(new Date().getTime())",
+									"    console.log(timestamp)",
+									"    pm.environment.set(\"starTime\", timestamp+1800000);",
+									"    pm.environment.set(\"endTime\", timestamp+3600000);",
+									"},2000)",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"create media activity Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Check respose create media-activity\"] = jsonData.data === true; //断言data为true",
+									"console.log(jsonData.data)",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"broadcastType\": 1,\n\"coverUrl\": \"https://yolocast-1258001477.cos.na-siliconvalley.myqcloud.com/image/885756892349276160/e6e27734-cfae-4b94-805b-64536f443ed1.jpg\",\n\"description\": \"\",\n\"endTime\": {{endTime}},\n\"isAutoSubtitle\": 0,\n\"isEmbeddedConfig\": 0,\n\"isLiveOnly\": 0,\n\"isSetPassword\": 0,\n\"sourceReferenceId\": \"{{constantmediaId}}\",\n\"sourceReferenceType\": 3,\n\"startTime\": {{starTime}},\n\"title\": \"media-接口自动化{{current_timestamp}}\",\n\"videoFrameRate\": 1,\n\"videoResolution\": 1,\n\"destinationData\":[\n    {\n        \"platformId\": \"{{fb-platformId}}\",\n        \"platformType\": 3,\n        \"facebookType\": 1,\n        \"privacyStatus\": 3\n    },\n    {\n        \"platformId\": \"{{twitch-platformId}}\",\n        \"platformType\": 5\n    }\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/activity",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取前三个预约活动activityId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// 把responseBody转为json字符串",
+									"var data = JSON.parse(responseBody);",
+									"// 设置环境变量token，供后面的接口引用，位置就是上一步获取的位置",
+									"pm.environment.set(\"firstactivityId\", data.data.items[0].activityId);",
+									"pm.environment.set(\"secondactivityId\", data.data.items[1].activityId);",
+									"pm.environment.set(\"thirdactivityId\", data.data.items[2].activityId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity?pageNo=1&pageSize=10&title=&status=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity"
+							],
+							"query": [
+								{
+									"key": "pageNo",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "title",
+									"value": ""
+								},
+								{
+									"key": "status",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "编辑活动(引用活动、时间-liveonly）",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){",
+									"    var moment = require('moment');",
+									"    var current_timestamp = moment().format(\"YYYY-MM-DD H:mm:ss\")",
+									"    pm.environment.set(\"current_timestamp\", current_timestamp);",
+									"    //Get Normal TimeStamp",
+									"    console.log(current_timestamp);",
+									"",
+									"",
+									"    timestamp=Math.round(new Date().getTime())",
+									"    console.log(timestamp)",
+									"    pm.environment.set(\"starTime\", timestamp+600000);",
+									"    pm.environment.set(\"endTime\", timestamp+2400000);",
+									"},2000)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Check respose update reevent-activity\"] = jsonData.data === true; //断言data为true",
+									"console.log(jsonData.data)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"broadcastType\": 1,\n\"coverUrl\": \"{{coverUrl}}\",\n\"description\": \"引用活动接口自动化-update{{current_timestamp}}\",\n\"endTime\": {{endTime}},\n\"isAutoSubtitle\": 0,\n\"isEmbeddedConfig\": 0,\n\"isLiveOnly\": 1,\n\"isSetPassword\": 1,\n\"password\": \"111111\",\n\"sourceReferenceId\": \"{{constantactivityId}}\",\n\"sourceReferenceType\": 2,\n\"startTime\": {{starTime}},\n\"title\": \"引用活动接口自动化-update{{current_timestamp}}\",\n\"videoFrameRate\": 1,\n\"videoResolution\": 1\n}\n\n\n\n\n\n\n\n\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/activity/{{firstactivityId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{firstactivityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "编辑活动(mediavideo-加密分发)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){",
+									"    var moment = require('moment');",
+									"    var current_timestamp = moment().format(\"YYYY-MM-DD H:mm:ss\")",
+									"    pm.environment.set(\"current_timestamp\", current_timestamp);",
+									"    //Get Normal TimeStamp",
+									"    console.log(current_timestamp);",
+									"",
+									"",
+									"    timestamp=Math.round(new Date().getTime())",
+									"    console.log(timestamp)",
+									"    pm.environment.set(\"starTime\", timestamp+600000);",
+									"    pm.environment.set(\"endTime\", timestamp+2400000);",
+									"},2000)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Check respose update media-activity\"] = jsonData.data === true; //断言data为true",
+									"console.log(jsonData.data)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"broadcastType\": 1,\n\"coverUrl\": \"{{coverUrl}}\",\n\"description\": \"mediavideo接口自动化-update{{current_timestamp}}\",\n\"endTime\": {{endTime}},\n\"isAutoSubtitle\": 0,\n\"isEmbeddedConfig\": 0,\n\"isLiveOnly\": 0,\n\"isSetPassword\": 1,\n\"password\": \"111111\",\n\"sourceReferenceId\": \"{{constantmediaId}}\",\n\"sourceReferenceType\": 3,\n\"startTime\": {{starTime}},\n\"title\": \"media接口自动化-update{{current_timestamp}}\",\n\"videoFrameRate\": 1,\n\"videoResolution\": 1\n}\n\n\n\n\n\n\n\n\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/activity/{{secondactivityId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{secondactivityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "编辑活动（修改推流方式obs）",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){",
+									"    var moment = require('moment');",
+									"    var current_timestamp = moment().format(\"YYYY-MM-DD H:mm:ss\")",
+									"    pm.environment.set(\"current_timestamp\", current_timestamp);",
+									"    //Get Normal TimeStamp",
+									"    console.log(current_timestamp);",
+									"",
+									"",
+									"    timestamp=Math.round(new Date().getTime())",
+									"    console.log(timestamp)",
+									"    pm.environment.set(\"starTime\", timestamp+600000);",
+									"    pm.environment.set(\"endTime\", timestamp+2400000);",
+									"},2000)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Check respose update obs-activity\"] = jsonData.data === true; //断言data为true",
+									"console.log(jsonData.data)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"broadcastType\": 1,\n\"coverUrl\": \"{{coverUrl}}\",\n\"description\": \"obs接口自动化-update{{current_timestamp}}\",\n\"endTime\": {{endTime}},\n\"isAutoSubtitle\": 0,\n\"isEmbeddedConfig\": 0,\n\"isLiveOnly\": 0,\n\"isSetPassword\": 0,\n\"sourceReferenceId\": \"{{constantsourceId}}\",\n\"sourceReferenceType\": 1,\n\"startTime\": {{starTime}},\n\"title\": \"obs接口自动化-update{{current_timestamp}}\",\n\"videoFrameRate\": 2,\n\"videoResolution\": 3,\n\"destinationData\":[\n    {\n        \"platformId\": \"{{rtmp-platformId}}\",\n        \"platformType\": 1\n    },\n    {\n    \"platformId\": \"{{youtu-platformId}}\",\n    \"platformType\": 2,\n    \"privacyStatus\": 3\n    },\n    {\n        \"platformId\": \"{{fb-platformId}}\",\n        \"platformType\": 3,\n        \"facebookType\": 1,\n        \"privacyStatus\": 3\n    },\n    {\n        \"platformId\": \"{{twitch-platformId}}\",\n        \"platformType\": 5\n    }\n]\n}\n\n\n\n\n\n\n\n\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/activity/{{thirdactivityId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{thirdactivityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "re-event活动提前start",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"setTimeout(function(){",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Check respose ReeventActivity previous-start \"] = jsonData.data === true; //断言data为true",
+									"console.log(jsonData.data)",
+									"},5000)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){},2000)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity/{{firstactivityId}}/start",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{firstactivityId}}",
+								"start"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "media活动提前start",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"setTimeout(function(){",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Check respose mediaActivity previous-start \"] = jsonData.data === true; //断言data为true",
+									"console.log(jsonData.data)",
+									"},5000)",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){},2000)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity/{{secondactivityId}}/start",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{secondactivityId}}",
+								"start"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obs推流活动提前start",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"setTimeout(function(){",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Check respose obsActivity previous-start \"] = jsonData.data === true; //断言data为true",
+									"console.log(jsonData.data)",
+									"},5000)",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){},2000)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity/{{thirdactivityId}}/start",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{thirdactivityId}}",
+								"start"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "媒体库文档列表--docId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"get docId Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"// 把responseBody转为json字符串",
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"docId\", jsonData.data.items[0].materialId);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/material?pageNo=1&pageSize=15&materialType=3&transcodeStatus=4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"material"
+							],
+							"query": [
+								{
+									"key": "pageNo",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "15"
+								},
+								{
+									"key": "materialType",
+									"value": "3"
+								},
+								{
+									"key": "transcodeStatus",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "活动1添加文档",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Check respose create documrnt \"] = jsonData.data == true; //断言data为true",
+									"console.log(jsonData.data)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"docId\": {{docId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/activity/{{firstactivityId}}/doc/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{firstactivityId}}",
+								"doc",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "活动1文档列表--activitydocId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"pm.environment.set(\"activityDocId\", jsonData.data[0].activityDocId);",
+									"pm.environment.set(\"docId\", jsonData.data[0].docId);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity/{{firstactivityId}}/doc/list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{firstactivityId}}",
+								"doc",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update 活动1的首个文档",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Check respose update document data\"] = jsonData.data == true; //断言data为true",
+									"console.log(jsonData.data)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"activityDocId\": {{activityDocId}},\n  \"docId\": {{docId}},\n  \"aliasName\": \"update {{current_timestamp}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/activity/{{firstactivityId}}/doc/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{firstactivityId}}",
+								"doc",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除活动1的第一个文档",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Check respose delete first document data\"] = jsonData.data == true; //断言data为true",
+									"console.log(jsonData.data)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity/{{firstactivityId}}/doc/delete?activityDocId={{activityDocId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{firstactivityId}}",
+								"doc",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "activityDocId",
+									"value": "{{activityDocId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "overview获取被引用的活动列表",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"list-replay Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Check respose overview list-replay errorData value\"] = jsonData.errorData === null; //断言data为true",
+									"console.log(jsonData.data)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity/{{firstactivityId}}/list-replay?pageNo=1&pageSize=10",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{firstactivityId}}",
+								"list-replay"
+							],
+							"query": [
+								{
+									"key": "pageNo",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "copy url分享-生成链接",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"generate channellink Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"channelId\",jsonData.data.channelId );",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"    timestamp=Math.round(new Date().getTime()/1000)",
+									"    console.log(timestamp)",
+									"    pm.environment.set(\"timestamp\",timestamp)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"{{timestamp}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/channel",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"channel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "校验自定义分享链接",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"check link Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check respose channelId value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data[0].channelId).to.eql(pm.environment.get(\"channelId\"));",
+									"    console.log(jsonData.data[0].channelId)",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/channel",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"channel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取推流的sourceId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"sourceId\", jsonData.data.sourceId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity/{{thirdactivityId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{thirdactivityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "流状态校验",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"stream-Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"Check respose stream-status\"] = jsonData.data.status === 1; //断言 推流状态=1 正常推流",
+									"console.log(jsonData.data)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){},10000)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity/{{thirdactivityId}}/stream-status?sourceId={{sourceId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{thirdactivityId}}",
+								"stream-status"
+							],
+							"query": [
+								{
+									"key": "sourceId",
+									"value": "{{sourceId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "分发状态校验",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"distribute-status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"for(var i=0;i<jsonData.data.length;i++){",
+									"    tests[\"Check respose distribute-status\"] = jsonData.data[i].status === 2; //断言 分发状态=2 正常分发",
+									"    console.log(jsonData.data[i].status)",
+									"}",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){},15000)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity/{{thirdactivityId}}/distribute-status",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{thirdactivityId}}",
+								"distribute-status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "re-event活动提前stop",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){},1000)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"stop events(re-event) Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity/{{firstactivityId}}/stop",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{firstactivityId}}",
+								"stop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "media活动提前stop",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){},3000)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"stop media-events Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity/{{secondactivityId}}/stop",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{secondactivityId}}",
+								"stop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obs推流活动提前stop",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){},10000)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"stop obs-events Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity/{{thirdactivityId}}/stop",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{thirdactivityId}}",
+								"stop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取第10个结束活动activityid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"get the twentieth ended-events Status\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									" ",
+									"// 把responseBody转为json字符串",
+									"var data = JSON.parse(responseBody);",
+									"// 设置环境变量token，供后面的接口引用，位置就是上一步获取的位置",
+									"console.log(data);",
+									"pm.environment.set(\"activityId\", data.data.items[20].activityId);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity?pageNo=1&pageSize=50&title=&status=3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity"
+							],
+							"query": [
+								{
+									"key": "pageNo",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "50"
+								},
+								{
+									"key": "title",
+									"value": ""
+								},
+								{
+									"key": "status",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除结束活动",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"the twentieth ended-events Status\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity/{{activityId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{activityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "回放活动剪辑",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"    var startTimeOffset = parseInt(50*Math.random());",
+									"    var endTimeOffset = parseInt(50*Math.random())+60;",
+									"    pm.environment.set(\"startTimeOffset\",startTimeOffset)",
+									"    pm.environment.set(\"endTimeOffset\",endTimeOffset)",
+									"",
+									"    console.log(startTimeOffset,endTimeOffset);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Clip playback Status\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"activityId\": \"{{constantactivityId}}\",\n  \"taskType\": 1,\n  \"startTimeOffset\": {{startTimeOffset}},\n  \"endTimeOffset\": {{endTimeOffset}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/vod/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"vod",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "校验回放剪辑生成时间",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"pm.test(\"check vod startTimeOffset value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data.startTimeOffset).to.eql(pm.environment.get(\"startTimeOffset\"));",
+									"    ",
+									"});",
+									"",
+									"",
+									"pm.test(\"check vod endTimeOffset value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data.endTimeOffset).to.eql(pm.environment.get(\"endTimeOffset\"));",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){},10000)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/activity/{{constantactivityId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity",
+								"{{constantactivityId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create高光",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"    timestamp=Math.round(new Date().getTime()/1000)",
+									"    console.log(timestamp)",
+									"    pm.environment.set(\"timestamp\",timestamp)",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"activityId\": \"{{constantactivityId}}\",\n  \"startTimeOffset\": {{startTimeOffset}},\n  \"endTimeOffset\": {{endTimeOffset}},\n  \"taskType\": 2,\n  \"vodName\": \"{{timestamp}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/vod/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"vod",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "校验高光转码生成mp4",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// 把responseBody转为json字符串",
+									"var data = JSON.parse(responseBody);",
+									"//断言count数量不为0",
+									"tests[\"Check respose Highlight vodUrl value\"] = data.data.items[0].vodUrl != \"\"; ",
+									"tests[\"Check respose Highlight coverUrl value\"] = data.data.items[0].coverUrl != \"\"; ",
+									"console.log(data.data.items[0].vodUrl, data.data.items[0].coverUrl)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){},60000)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/vod/list?activityId={{constantactivityId}}&page=1&pageSize=100",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"vod",
+								"list"
+							],
+							"query": [
+								{
+									"key": "activityId",
+									"value": "{{constantactivityId}}"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "准时开播活动(固定变量constantsourceId)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"    var moment = require('moment');",
+									"    var current_timestamp = moment().format(\"YYYY-MM-DD H:mm:ss\")",
+									"    pm.environment.set(\"current_timestamp\", current_timestamp);",
+									"    //Get Normal TimeStamp",
+									"    console.log(current_timestamp);",
+									"",
+									"",
+									"    timestamp=Math.round(new Date().getTime())",
+									"    console.log(timestamp)",
+									"    pm.environment.set(\"starTime\", timestamp+60000);",
+									"    pm.environment.set(\"endTime\", timestamp+1800000);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"On time constantsourceId-events Status\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"broadcastType\": 1,\n\"coverUrl\": \"\",\n\"description\": \"准时开播活动(obs推流)\",\n\"endTime\": {{endTime}},\n\"isAutoSubtitle\": 0,\n\"isEmbeddedConfig\": 0,\n\"isLiveOnly\": 0,\n\"isSetPassword\": 1,\n\"password\": \"111111\",\n\"sourceReferenceId\": \"{{constantsourceId}}\",\n\"sourceReferenceType\": 1,\n\"startTime\": {{starTime}},\n\"title\": \"自动开播obs-create{{current_timestamp}}\",\n\"videoFrameRate\": 1,\n\"videoResolution\": 1,\n\"destinationData\":[\n    {\n        \"platformId\": \"{{rtmp-platformId}}\",\n        \"platformType\": 1\n    },\n    {\n    \"platformId\": \"{{youtu-platformId}}\",\n    \"platformType\": 2,\n    \"privacyStatus\": 3\n    },\n    {\n        \"platformId\": \"{{fb-platformId}}\",\n        \"platformType\": 3,\n        \"facebookType\": 1,\n        \"privacyStatus\": 3\n    },\n    {\n        \"platformId\": \"{{twitch-platformId}}\",\n        \"platformType\": 5\n    }\n]\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/activity",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "准时开播活动(固定变量constantactivityId)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"    var moment = require('moment');",
+									"    var current_timestamp = moment().format(\"YYYY-MM-DD H:mm:ss\")",
+									"    pm.environment.set(\"current_timestamp\", current_timestamp);",
+									"    //Get Normal TimeStamp",
+									"    console.log(current_timestamp);",
+									"",
+									"",
+									"    timestamp=Math.round(new Date().getTime())",
+									"    console.log(timestamp)",
+									"    pm.environment.set(\"starTime\", timestamp+3000);",
+									"    pm.environment.set(\"endTime\", timestamp+1800000);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"On time constantactivityId-events Status\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cast-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"broadcastType\": 1,\n\"coverUrl\": \"\",\n\"description\": \"准时开播活动(引用活动)\",\n\"endTime\": {{endTime}},\n\"isAutoSubtitle\": 0,\n\"isEmbeddedConfig\": 0,\n\"isLiveOnly\": 0,\n\"isSetPassword\": 1,\n\"password\": \"111111\",\n\"sourceReferenceId\": \"{{constantactivityId}}\",\n\"sourceReferenceType\": 2,\n\"startTime\": {{starTime}},\n\"title\": \"自动开播引用活动-create{{current_timestamp}}\",\n\"videoFrameRate\": 1,\n\"videoResolution\": 1,\n\"destinationData\":[\n    {\n        \"platformId\": \"{{rtmp-platformId}}\",\n        \"platformType\": 1\n    },\n    {\n    \"platformId\": \"{{youtu-platformId}}\",\n    \"platformType\": 2,\n    \"privacyStatus\": 3\n    },\n    {\n        \"platformId\": \"{{fb-platformId}}\",\n        \"platformType\": 3,\n        \"facebookType\": 1,\n        \"privacyStatus\": 3\n    },\n    {\n        \"platformId\": \"{{twitch-platformId}}\",\n        \"platformType\": 5\n    }\n]\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/activity",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"activity"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
